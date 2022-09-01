@@ -102,7 +102,7 @@ const AuthForm = () => {
         else{
           users.push({id:users.length,email:enteredEmail,password:enteredPassword});
           localStorage.setItem("users", JSON.stringify(users));
-          authCtx.loginStateHandler(false);
+          authCtx.loginStateHandler();
           history.replace('/profile');
         }
       }
@@ -116,7 +116,8 @@ const AuthForm = () => {
       
       
     }
-    
+    console.log("hi");
+    console.log(localStorage.getItem('login'));
         
   };
 

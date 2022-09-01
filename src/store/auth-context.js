@@ -1,6 +1,5 @@
 import React, { useState} from 'react';
 
-let logoutTimer;
 //context to handle loggin info
 const AuthContext = React.createContext({
   isLoggedIn: false, 
@@ -10,24 +9,31 @@ const AuthContext = React.createContext({
 
 
 export const AuthContextProvider = (props) => {
-  const state=localStorage.getItem('login');
+  let state;
+  if(localStorage.getItem('login')==="false"){
+    state=false;
+  }
+  else{
+    state=true;
+  }
   console.log(state);
-  console.log(localStorage.getItem('admin'));
-  // const adminState=localStorage.getItem('admin');
+  console.log("local1",typeof (localStorage.getItem('login')));
+  
+  
 
   const [isLoggedIn,setIsLogin] =useState(state);
-  // const [isAdmin,setAdmin]=useState(adminState);
+  
  
   
   const loginStateHandler = () =>{
     setIsLogin(true);
-    localStorage.setItem('login',true);
+    localStorage.setItem('login',JSON.stringify(true));
   }
 
   const logoutStateHandler = () =>{
     setIsLogin(false);
-    localStorage.setItem('login',false);
-    localStorage.setItem('admin',false);
+    localStorage.setItem('login',JSON.parse(false));
+    localStorage.setItem('admin',JSON.parse(false));
     console.log(isLoggedIn);
   }
   

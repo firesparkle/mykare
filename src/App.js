@@ -10,23 +10,36 @@ import Admin from './components/Auth/Admin';
 
 function App() {
   const authCtx = useContext(AuthContext);
+  let state ;
+  if(localStorage.getItem('admin')==="false"){
+    state=false;
+  }
+  else{
+    state=true;
+  }
+  
 
   return (
     <Layout>
       <Switch>
         <Route path='/admin' >
-         <Admin/> 
+         {state &&<Admin/>}
+         {!state && <Redirect to='/' />} 
         </Route>
-        {!authCtx.isLoggedIn && (
-          <Route path='/'>
-            <AuthPage />
-          </Route>
-        )}
-        <Route path='/profile'>
-          {console.log(authCtx.isLoggedIn)}
+        
+          <Route path='/' exact>
+          {!authCtx.isLoggedIn&&<AuthPage />}
           {authCtx.isLoggedIn && <UserProfile />}
+          </Route>
+      
+        <Route path='/profile'>
+          
           {!authCtx.isLoggedIn && <Redirect to='/' />}
+          {console.log("+")}
+          {authCtx.isLoggedIn && <UserProfile />}
+          {console.log("-")}
         </Route>
+        {console.log("+")}
         <Route path='*'>
           <Redirect to='/' />
         </Route>

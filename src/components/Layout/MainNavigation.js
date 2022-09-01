@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
@@ -8,12 +8,14 @@ import { useHistory } from 'react-router-dom';
 
 const MainNavigation = () => {
   const history = useHistory();
-  const authCtx = useContext(AuthContext);
-
-  const isLoggedIn = authCtx.isLoggedIn;
+   const authCtx = useContext(AuthContext);
+  
+  
 
   const logoutHandler = () => {
-    authCtx.logoutStateHandler();
+     authCtx.logoutStateHandler();
+    
+    localStorage.setItem('login',false);
     history.replace('/');
 
     
@@ -26,17 +28,14 @@ const MainNavigation = () => {
       </Link>
       <nav>
         <ul>
-          {/* {!isLoggedIn && (
-            <li>
-              <Link to='/auth'>Login</Link>
-            </li>
-          )} */}
+        
           
-          {isLoggedIn && (
+          {authCtx.isLoggedIn && (
             <li>
               <button onClick={logoutHandler}>Logout</button>
             </li>
           )}
+          
         </ul>
       </nav>
     </header>
